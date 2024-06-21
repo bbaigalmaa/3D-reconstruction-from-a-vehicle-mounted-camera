@@ -63,8 +63,8 @@ SAMPLE    -  python rename_ELTECar.py 1 6145 PATH/FourthTestingDataForSecondRout
 Run main.py with following parameters:
 <ul>
     <li>dataset_type - kitti or elte</li>
-    <li>left_image_path - left image folder path</li>
-    <li>right_image_path - right image folder path</li>
+    <li>left_image_path - left images folder path</li>
+    <li>right_image_path - right images folder path</li>
     <li>ground_truth - ground truth file path</li>
 </ul>
  
