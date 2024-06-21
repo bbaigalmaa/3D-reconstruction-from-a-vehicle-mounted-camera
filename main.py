@@ -49,8 +49,17 @@ else:
 
 vo = visual_odometry(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], projection_left, projection_right, distortion, baseline, img_ext, number_of_images, starting_seq)
 
-# outlier removal - "1pts" or "2pnp" or ""
-# pose estimation - "5pts" or "P3PRansac"
-# vo.main("MIX", "1pts", "5pts")
-vo.main("KLT", "2pnp", "P3PRansac", "output.ply")
+# Template for main() function
+# vo.main(FeatureMatching, outlierRemoval, poseEstimation, outputFile) 
+    # FeatureMatching  - "KLT" or "SIFT"
+    # outlierRemoval   -  "1pts" or "2pnp"
+    # poseEstimation   -  "5pts" or "P3PRansac"
+    # outputFile       -  FILENAME.ply
+
+if(sys.argv[1] == "kitti"):
+    # KLT and optical flow
+    vo.main("KLT", "2pnp", "P3PRansac", "output_KLT.ply") 
+else:
+    # SIFT and optical flow
+    vo.main("SIFT", "1pts", "5pts", "output_SIFT.ply")
 
