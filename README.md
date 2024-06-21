@@ -62,12 +62,12 @@ SAMPLE    -  python rename_ELTECar.py 1 6145 PATH/FourthTestingDataForSecondRout
 <h3>Execute Visual Odometry </h3>
 Run main.py with following parameters:
 <ul>
-    <li>dataset_type - "kitti" or "elte"</li>
+    <li>dataset_type - kitti or elte</li>
     <li>left_image_path - left image folder path</li>
     <li>right_image_path - right image folder path</li>
     <li>ground_truth - ground truth file path</li>
 </ul>
  
 TEMPLATE - python main.py dataset_type left_image_path right_image_path ground_truth <br>
-SAMPLE 1  -  python main.py kitti PATH/dataset/sequences/10/image_0/ PATH/dataset/sequences/10/image_1/ PATH/dataset/poses/10.txt <br>
+SAMPLE 1  -  python main.py kitti PATH/dataset/sequences/03/image_0/ PATH/dataset/sequences/03/image_1/ PATH/dataset/poses/03.txt <br>
 SAMPLE 2  -  python main.py elte PATH/20231006/20231006_ELTEkorV2_pictures/DEV1_renamed/ PATH/20231006/20231006_ELTEkorV2_pictures/DEV0_renamed/ PATH/pts2D.mat <br>
