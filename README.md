@@ -1,7 +1,5 @@
 <h1 align="center"> <b>3D reconstruction from a vehicle mounted camera</b>  </h1>
 
-<p>Problem</p>
-
 This thesis work has utilized **KITTI** Benchmark and **ELTECar** datasets. Those can be found from https://www.cvlibs.net/datasets/kitti/eval_odometry.php and https://www.hackademix.hu/timeline-of-the-contest/
 
 **KITTI** Benchmark has plenty of samples and implementaions. Those can be find in the tables of above mentioned site for KITTI. 
