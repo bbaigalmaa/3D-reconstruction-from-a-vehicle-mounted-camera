@@ -24,7 +24,7 @@ if(sys.argv[1] == "kitti"):
     img_ext = ".png"
 
     starting_seq = 0 # Starting frame number
-    number_of_images = 1000 # Number of frames to track
+    number_of_images = 800 # Number of frames to track
 
 else:
     # Source: https://www.hackademix.hu/wp-content/uploads/2023/06/calibration_params.txt
