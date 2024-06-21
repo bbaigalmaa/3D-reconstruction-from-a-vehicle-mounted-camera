@@ -7,14 +7,17 @@
 <img src="https://github.com/bbaigalmaa/3D-reconstruction-from-a-vehicle-mounted-camera/assets/25894954/5969ba0e-2847-4a74-a82d-a0fe64e089b1" width="400" height="400"> 
 
 
-This thesis work has utilized **KITTI** Benchmark and **ELTECar** datasets. Those can be found from https://www.cvlibs.net/datasets/kitti/eval_odometry.php and https://www.hackademix.hu/timeline-of-the-contest/
+<h3> Implementation </h3>
 
-**KITTI** Benchmark has plenty of samples and implementaions. Those can be find in the tables of above mentioned site for KITTI. 
-On the other hand, **ELTECar** dataset is set of images, GPS coordinates and Lidar points captured by vehicle mounted cameras used in Eötvös Loránd University, Faculty of Informatics.
+This thesis work utilized **KITTI** Benchmark and **ELTECar** datasets, can be found at https://www.cvlibs.net/datasets/kitti/eval_odometry.php and https://www.hackademix.hu/timeline-of-the-contest/, respectively. **KITTI** Benchmark has plenty of samples and implementaions, listed on the tables of former mentioned site for KITTI. 
+On the other hand, the **ELTECar** dataset is a set of images, GPS coordinates and Lidar points captured by vehicle mounted cameras used at Faculty of Informatics, Eötvös Loránd University.
 
 <img src="https://github.com/bbaigalmaa/3D-reconstruction-from-a-vehicle-mounted-camera/assets/25894954/3b57ae26-e7af-44a9-a970-8cb2ea548753" width="500" height="500">
 
-The above picture shows the ELTECar Camera setup, where this thesis work utilized DEV1 and DEV0 cameras. Each camera's measurements are relative to the Lidar optical center, Y axis. The cameras are monocular HikVision/HikRobot MV-CA020-20GC model with normal optics. The cameras are placed around the front wheel of the car, facing relative to the forward axis at 20 and 60 degree angles. Other than the cameras, ELTECar installed GPS, LIDAR, IMU and those sensors' current detailed information can be found in https://www.hackademix.hu/wp-content/uploads/2023/06/Sensor_pack_summary_2023.pdf. Generally, all the ELTECar datasets have the same format and two different routes(for now). However, in the case of simplicity, this elaboration is going to choose a specific dataset and focus on explaining the procedure on the dataset. The specific dataset is the second route captured on 2023.10.06. This ELTECar Second Route 4th testing dataset is shared in this oneDrive folder, which requires login with a university account - https://ikelte-my.sharepoint.com/personal/kovbando_inf_elte_hu/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fkovbando%5Finf%5Felte%5Fhu%2FDocuments%2Fosszerendelt%5Fnyers%5Fadatok%2F20231006&ga=1. The total size of the dataset is 22.1GB and here, in this elaboration, the dataset is referenced as 20231006 due to it being extracted into the same named folder. Folder structure and ground truth generation steps are the following.
+The above picture shows the ELTECar Camera setup, where this thesis work utilized DEV1 and DEV0 cameras. Each camera's measurements are relative to the Lidar optical center, Y axis. The cameras are monocular HikVision/HikRobot MV-CA020-20GC model with normal optics. The cameras are placed around the front wheel of the car, facing relative to the forward axis at 20 and 60 degree angles. Other than the cameras, ELTECar installed GPS, LIDAR, IMU and those sensors' current detailed information can be found in https://www.hackademix.hu/wp-content/uploads/2023/06/Sensor_pack_summary_2023.pdf. Generally, all the ELTECar datasets have the same format and two different routes(for now). However, in the case of simplicity, this elaboration is going to choose a specific dataset and focus on explaining the procedure on the dataset. The specific dataset is the second route captured on 2023.10.06. 
+
+**Where can we find ELTECar Dataset and what is the structure?**
+The ELTECar Second Route 4th testing dataset is shared in this oneDrive folder, which requires login with a university account - https://ikelte-my.sharepoint.com/personal/kovbando_inf_elte_hu/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fkovbando%5Finf%5Felte%5Fhu%2FDocuments%2Fosszerendelt%5Fnyers%5Fadatok%2F20231006&ga=1. The total size of the dataset is 22.1GB and here, in this elaboration, the dataset is referenced as 20231006 due to it being extracted into the same named folder. Folder structure and ground truth generation steps are the following.
 
 The dataset contains following (see also 20231006/info.txt): 
 <ul>
@@ -40,7 +43,8 @@ Now, we need to prepare ground truth trajectory points from GPS. To do so, the s
 </ol> 
 The above steps are the same for other ELTECar datasets by replacing DEV0 images and changing the .csv file path.
 
-Then, to make simple to read images, the ELTECar dataset was renamed to a numerical ordering same as KITTI images. However, it is not necessary to be renamed. Reasons why the thesis work has implemented this renaming step are: 1. Reading image files one by one took a long time.
+**ELTECar dataset renaming**
+To make simple to read images, the ELTECar dataset was renamed to a numerical ordering same as KITTI images. However, it is not necessary to be renamed. Reasons why the thesis work has implemented this renaming step are: 1. Reading image files one by one took a long time.
                         2. When reading all the files from the folder, the image ordering changed.
 So the solution I found was to rename the images once and use the renamed image folder instead of the original one.
 To do so, we need to execute ELTECarDatasetRename/rename_ELTECar.py with following parameters:
@@ -54,3 +58,16 @@ To do so, we need to execute ELTECarDatasetRename/rename_ELTECar.py with followi
 For example, in the 20231006 dataset we can run the following from opened command prompt in the folder, ELTECarDatasetRename. This inculdes general template and sample. <br>
 TEMPLATE  -  "python rename_ELTECar.py start last path_read path_write camera" <br>
 SAMPLE    -  "python rename_ELTECar.py 1 6145 PATH/FourthTestingDataForSecondRoute/20231006/20231006_ELTEkorV2_pictures/DEV0/ PATH/DEV0_renamed DEV0" <br>
+
+**Execute Visual Odometry**
+Run main.py with following parameters:
+<ul>
+    <li>dataset_type - "kitti" or "elte"</li>
+    <li>left_image_path - left image folder path</li>
+    <li>right_image_path - right image folder path</li>
+    <li>ground_truth - ground truth file path</li>
+</ul>
+
+TEMPLATE - python main.py dataset_type left_image_path right_image_path ground_truth
+SAMPLE 1 -  python main.py kitti PATH/dataset/sequences/10/image_0/ PATH/dataset/sequences/10/image_1/ PATH/dataset/poses/10.txt
+SAMPLE 2 -  python main.py elte PATH/20231006/20231006_ELTEkorV2_pictures/DEV1_renamed/ PATH/20231006/20231006_ELTEkorV2_pictures/DEV0_renamed/ PATH/pts2D.mat
